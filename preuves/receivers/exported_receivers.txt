@@ -1,0 +1,23 @@
+## Commande exécutée
+dz> run app.broadcast.info -a com.example.vulnerableapp
+
+## Résultat brut Drozer
+Package: com.example.vulnerableapp
+
+  com.example.vulnerableapp.BootReceiver
+    Permission: null
+    Exported: true
+    Intent Filter:
+      Action: android.intent.action.BOOT_COMPLETED
+
+  com.example.vulnerableapp.NetworkChangeReceiver
+    Permission: null
+    Exported: false
+    Intent Filter:
+      Action: android.net.conn.CONNECTIVITY_CHANGE
+
+## Observations
+- BootReceiver : exporté sans permission de protection → peut être déclenché par un broadcast forgé
+- L'intent-filter sur BOOT_COMPLETED rend le composant visible depuis l'extérieur (nécessité fonctionnelle)
+- NetworkChangeReceiver : non exporté → correctement configuré
+- Aucun receiver n'implémente de validation d'intent (absence de vérification de l'action reçue)

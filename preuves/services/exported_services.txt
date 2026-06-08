@@ -1,0 +1,18 @@
+## Commande exécutée
+dz> run app.service.info -a com.example.vulnerableapp
+
+## Résultat brut Drozer
+Package: com.example.vulnerableapp
+
+  com.example.vulnerableapp.DataSyncService
+    Permission: null
+    Exported: true
+
+  com.example.vulnerableapp.NotificationService
+    Permission: null
+    Exported: false
+
+## Observations
+- DataSyncService : exporté sans aucune permission → toute application peut le démarrer ou s'y lier
+- NotificationService : non exporté → correctement configuré
+- Aucun service n'implémente de validation d'intent dans son onStartCommand (vérification statique du manifeste)

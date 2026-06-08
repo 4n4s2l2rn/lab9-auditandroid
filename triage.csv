@@ -1,0 +1,9 @@
+ID,Composant,Vulnérabilité,Confiance,Sévérité,Impact,Recommandation,Statut
+V1,LoginActivity,Activité exportée sans aucune permission,Élevée,Élevée,Contournement du flux d'authentification par appel direct de l'activité,Définir android:exported=false,À corriger
+V2,UserDataProvider,Content Provider exporté sans permission de lecture ni d'écriture,Élevée,Critique,Fuite et corruption de données utilisateur (profils / sessions / préférences),Définir readPermission et writePermission de niveau signature,À corriger
+V3,DataSyncService,Service exporté sans validation d'intent,Moyenne,Élevée,Exécution de synchronisations arbitraires vers un serveur attaquant,Définir exported=false ou ajouter une permission signature + validation d'intent,À corriger
+V4,BootReceiver,Receiver exporté sans permission de protection,Élevée,Moyenne,Déclenchement non autorisé d'actions post-boot via broadcast forgé,Ajouter android:permission=android.permission.RECEIVE_BOOT_COMPLETED et valider l'intent dans onReceive,À corriger
+V5,UserProfileActivity,Permission de protection de niveau normal (insuffisant),Élevée,Moyenne,Accès à des données de profil utilisateur par toute application déclarant la permission,Élever le niveau de protection à signature,À corriger
+V6,AndroidManifest,Absence de permissions personnalisées déclarées,Élevée,Élevée,Impossibilité de protéger les IPC internes par des permissions restrictives,Déclarer des permissions personnalisées avec android:protectionLevel=signature,À corriger
+V7,AndroidManifest,allowBackup non désactivé (défaut = true),Moyenne,Moyenne,Extraction des données applicatives via adb backup sans root,Ajouter android:allowBackup=false dans le tag <application>,À corriger
+V8,UserDataProvider,Absence de validation des paramètres de requête (risque d'injection SQL),Moyenne,Élevée,Extraction non autorisée de données via paramètres de sélection forgés,Implémenter une whitelist de projections et utiliser des requêtes paramétrées,À corriger

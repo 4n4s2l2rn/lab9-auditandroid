@@ -1,0 +1,26 @@
+## Commande exécutée
+dz> run app.activity.info -a com.example.vulnerableapp
+
+## Résultat brut Drozer
+Package: com.example.vulnerableapp
+
+  com.example.vulnerableapp.LoginActivity
+    Permission: null
+    Exported: true
+
+  com.example.vulnerableapp.UserProfileActivity
+    Permission: com.example.vulnerableapp.permission.USER_PROFILE
+    Exported: true
+
+  com.example.vulnerableapp.MainActivity
+    Permission: null
+    Exported: false
+
+  com.example.vulnerableapp.SettingsActivity
+    Permission: null
+    Exported: false
+
+## Observations
+- LoginActivity : exportée sans permission → accès direct possible depuis n'importe quelle application
+- UserProfileActivity : exportée avec permission déclarée mais protection de niveau "normal" (insuffisante)
+- MainActivity et SettingsActivity : non exportées → correctement configurées

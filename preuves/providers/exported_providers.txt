@@ -1,0 +1,26 @@
+## Commande exécutée
+dz> run app.provider.info -a com.example.vulnerableapp
+
+## Résultat brut Drozer
+Package: com.example.vulnerableapp
+
+  com.example.vulnerableapp.UserDataProvider
+    Authority: com.example.vulnerableapp.provider.userdata
+    Read Permission: null
+    Write Permission: null
+    Content Provider: com.example.vulnerableapp.UserDataProvider
+    Multiprocess Allowed: false
+    Grant Uri Permissions: false
+    Exported: true
+
+## URIs détectées (run scanner.provider.finduris)
+  content://com.example.vulnerableapp.provider.userdata/users
+  content://com.example.vulnerableapp.provider.userdata/users/#
+  content://com.example.vulnerableapp.provider.userdata/sessions
+  content://com.example.vulnerableapp.provider.userdata/preferences
+
+## Observations
+- UserDataProvider : exporté sans aucune permission en lecture ni en écriture
+- 4 URIs accessibles sans authentification
+- Le provider expose des données utilisateur, des sessions et des préférences
+- Absence de validation des paramètres de projection et de sélection (risque d'injection SQL)
